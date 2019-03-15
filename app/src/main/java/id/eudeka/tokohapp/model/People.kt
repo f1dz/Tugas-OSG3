@@ -7,5 +7,5 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class People(
     @SerializedName("results")
-    val peoples: List<PeopleDetail>? = null
+    var peoples: MutableList<PeopleDetail>
 ): Parcelable
