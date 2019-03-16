@@ -7,7 +7,7 @@ class ApiClient {
     companion object {
         fun getClient(): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://swapi.co/api/people/")
+                .baseUrl("https://swapi.co/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         }
