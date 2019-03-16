@@ -9,8 +9,8 @@ import id.eudeka.tokohapp.model.PeopleDetail
 interface PeopleDao {
 
     @Query("SELECT * FROM people")
-    fun getPeople(): List<PeopleDetail>
+    fun getPeople(): MutableList<PeopleDetail>
 
     @Insert
-    fun insertPeople(people: List<PeopleDetail>)
+    fun insertPeople(people: MutableList<PeopleDetail>)
 }
