@@ -8,16 +8,21 @@ import retrofit2.Response
 
 class PeopleRemoteDataSource: PeopleDataSource, Callback<People> {
 
+    private val apiInterface = ApiClient.getClient().create(ApiInterface::class.java)
+    private lateinit var callBack: PeopleDataSource.GetPeoplesCallback
+
     override fun getListPeoples(callback: PeopleDataSource.GetPeoplesCallback) {
-        TODO("not implemented") //Silahkan dikerjakan
+        callBack = callback
+        val call = apiInterface.getAllPeoples()
+        call.enqueue(this)
     }
 
     override fun onFailure(call: Call<People>, t: Throwable) {
-        TODO("not implemented") //Silahkan dikerjakan
+        callBack.onDataNotAvailable(t.localizedMessage)
     }
 
     override fun onResponse(call: Call<People>, response: Response<People>) {
-        TODO("not implemented") //Silahkan dikerjakan
+        response.body()?.let {callBack.onPeopleLoaded(it)}
     }
 
 }

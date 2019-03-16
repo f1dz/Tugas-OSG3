@@ -2,6 +2,7 @@ package id.eudeka.tokohapp.data
 
 import id.eudeka.tokohapp.data.local.PeopleLocalDataSource
 import id.eudeka.tokohapp.data.remote.PeopleRemoteDataSource
+import id.eudeka.tokohapp.model.People
 
 class PeopleRepository(
     private val peopleRemoteDataSource: PeopleRemoteDataSource,
@@ -9,10 +10,33 @@ class PeopleRepository(
 ): PeopleDataSource {
 
     override fun getListPeoples(callback: PeopleDataSource.GetPeoplesCallback) {
-        TODO("not implemented") //Silahkan dikerjakan
+        peopleLocalDataSource.getListPeoples(
+            object : PeopleDataSource.GetPeoplesCallback{
+                override fun onPeopleLoaded(data: People) {
+                    callback.onPeopleLoaded(data)
+                }
+
+                override fun onDataNotAvailable(errorMessage: String) {
+                    getPeopleFromRemoteDataSource(callback)
+                }
+
+            }
+        )
     }
 
     private fun getPeopleFromRemoteDataSource(callback: PeopleDataSource.GetPeoplesCallback?) {
-        TODO("not implemented") //Silahkan dikerjakan
+        peopleRemoteDataSource.getListPeoples(
+            object : PeopleDataSource.GetPeoplesCallback{
+                override fun onPeopleLoaded(data: People) {
+                    peopleLocalDataSource.saveDataPeople(data.peoples)
+                    callback?.onPeopleLoaded(data)
+                }
+
+                override fun onDataNotAvailable(errorMessage: String) {
+                    callback?.onDataNotAvailable(errorMessage)
+                }
+
+            }
+        )
     }
 }
