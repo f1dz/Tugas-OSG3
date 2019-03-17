@@ -3,11 +3,14 @@ package id.eudeka.tokohapp.model
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.arch.persistence.room.TypeConverters
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import id.eudeka.tokohapp.data.local.Converters
 import kotlinx.android.parcel.Parcelize
 
 @Entity(tableName = "people")
+@TypeConverters(Converters::class)
 @Parcelize
 data class PeopleDetail(
 
@@ -52,19 +55,19 @@ data class PeopleDetail(
 
     @ColumnInfo(name = "films")
     @SerializedName("films")
-    val films: List<String>? = null,
+    val films: ArrayList<String>? = null,
 
     @ColumnInfo(name = "species")
     @SerializedName("species")
-    val species: List<String>? = null,
+    val species: ArrayList<String>? = null,
 
     @ColumnInfo(name = "vehicles")
     @SerializedName("vehicles")
-    val vehicles: List<String>? = null,
+    val vehicles: ArrayList<String>? = null,
 
     @ColumnInfo(name = "starships")
     @SerializedName("starships")
-    val starShips: List<String>? = null,
+    val starShips: ArrayList<String>? = null,
 
     @ColumnInfo(name = "url")
     @SerializedName("url")
