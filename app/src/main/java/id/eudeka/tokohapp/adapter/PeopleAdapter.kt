@@ -8,7 +8,7 @@ import id.eudeka.tokohapp.R
 import id.eudeka.tokohapp.model.PeopleDetail
 import kotlinx.android.synthetic.main.item_list_tokoh.view.*
 
-class PeopleAdapter (var listPeople : MutableList<PeopleDetail>) :
+class PeopleAdapter (var listPeople : MutableList<PeopleDetail>, private val listener: (PeopleDetail) -> Unit) :
     RecyclerView.Adapter<PeopleAdapter.ViewHolder>()
 {
     override fun onCreateViewHolder(viewGroup: ViewGroup, p1: Int): ViewHolder {
@@ -18,16 +18,16 @@ class PeopleAdapter (var listPeople : MutableList<PeopleDetail>) :
     override fun getItemCount() = listPeople.size
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bindValue(listPeople[position])
+        viewHolder.bindValue(listPeople[position], listener)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val tvNamePeople = view.tv_nama_pemain
-        val tvGender = view.tv_gender
 
-        fun bindValue(people: PeopleDetail) {
-            tvNamePeople.text = people.name
-            tvGender.text = people.gender
+        fun bindValue(people: PeopleDetail, listener: (PeopleDetail) -> Unit) {
+            itemView.tv_nama_pemain.text = people.name
+            itemView.tv_gender.text = people.gender
+
+            itemView.setOnClickListener { listener(people) }
         }
     }
 

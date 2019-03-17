@@ -32,7 +32,16 @@ class MainActivity : AppCompatActivity(), PeopleNavigator {
     }
 
     private fun initAdapter() {
-        peopleAdapter = PeopleAdapter(peoples)
+        peopleAdapter = PeopleAdapter(peoples) {
+
+            TODO("Need to be implemented")
+            /**
+             * Ganti Toast dibawah unsupaya pada saat klik menampilkan halaman detail
+             */
+
+            Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
+
+        }
         rv_list_people.layoutManager = LinearLayoutManager(this)
         rv_list_people.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         rv_list_people.adapter = peopleAdapter
